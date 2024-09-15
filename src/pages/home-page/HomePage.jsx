@@ -1,10 +1,11 @@
 import css from './HomePage.module.css';
-import icons from '../../assets/icons.svg';
+// import icons from '../../assets/icons.svg';
 import heroImg from '../../assets/hero-img.jpg';
-// import heroImg from '../../assets/hero-img.webp';
 import { Link } from 'react-router-dom';
+import setBodyBgColor from '../../utils/setBodyColor';
 
 const HomePage = () => {
+  setBodyBgColor('#ffffff');
   return (
     <>
       <section className={css.hero}>
