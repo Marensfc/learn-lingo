@@ -38,7 +38,7 @@ const FiltersForm = () => {
           <option value="b1">B1 Intermediate</option>
           <option value="b2">B2 Upper-Intermediate</option>
           <option value="c1">C1 Advanced</option>
-          <option value="c2">C2 Proficiency</option>
+          <option value="c2">C2 Proficient</option>
         </select>
       </div>
       <div className={css.formFieldWrapper}>

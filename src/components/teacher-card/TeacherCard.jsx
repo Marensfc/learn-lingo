@@ -1,14 +1,23 @@
 import css from './TeacherCard.module.css';
 import icons from '../../assets/icons.svg';
 
-const TeacherCard = () => {
+const TeacherCard = ({
+  avatar_url,
+  conditions,
+  experience,
+  languages,
+  lesson_info,
+  lessons_done,
+  levels,
+  fullName,
+  price_per_hour,
+  rating,
+  reviews,
+}) => {
   return (
     <li className={css.teacherCard}>
       <div className={css.teacherAvatarThumb}>
-        <img
-          src="https://ftp.goit.study/img/avatars/2.jpg"
-          alt="Teacher's avatar"
-        />
+        <img src={avatar_url} alt="Teacher's avatar" />
       </div>
       <div className={css.cardContentWrapper}>
         <button className={css.cardAddToFavoritesBtn} type="button">
@@ -26,46 +35,39 @@ const TeacherCard = () => {
               Lessons online
             </p>
             <p className={css.info_StatisticsLessonsCount}>
-              Lessons done: 1098
+              Lessons done: {lessons_done}
             </p>
             <p className={css.info_StatisticsRating}>
               <svg width={16} height={16}>
                 <use href={`${icons}#rating-star`}></use>
               </svg>
-              Rating: 4.8
+              Rating: {rating}
             </p>
             <p className={css.info_StatisticsPrice}>
-              Price / 1 hour: <span>30$</span>
+              Price / 1 hour: <span>{price_per_hour}$</span>
             </p>
           </div>
         </div>
-        <h3 className={css.cardTeacherName}>Jane Smith</h3>
+        <h3 className={css.cardTeacherName}>{fullName}</h3>
         <p className={css.cardSpokenLanguages}>
-          Speaks: <span>German, French</span>
+          Speaks: <span>{languages.join(', ')}</span>
         </p>
         <p className={css.cardLessonInfo}>
-          Lesson info:{' '}
-          <span>
-            Lessons are structured to cover grammar, vocabulary, and practical
-            usage of the language.
-          </span>
+          Lesson info: <span>{lesson_info}</span>
         </p>
         <p className={css.cardConditions}>
-          Conditions:{' '}
-          <span>
-            Welcomes both adult learners and teenagers (13 years and
-            above).Provides personalized study plans
-          </span>
+          Conditions: <span>{conditions.join(' ')}</span>
         </p>
         <button type="button" className={css.cardBtnReadMore}>
           Read more
         </button>
-        <div className={css.cardLevels}>
-          <p className={css.cardLevel}>#A1 Beginner</p>
-          <p className={css.cardLevel}>#A2 Elementary</p>
-          <p className={css.cardLevel}>#B1 Intermediate</p>
-          <p className={css.cardLevel}>#B2 Upper-Intermediate</p>
-        </div>
+        <ul className={css.cardLevels}>
+          {levels.map((level, index) => (
+            <li key={index}>
+              <p className={css.cardLevel}>#{level}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </li>
   );

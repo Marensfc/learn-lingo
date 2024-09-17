@@ -4,7 +4,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <AppBar />
-      <main>{children}</main>
+      <main style={{ paddingBottom: '50px' }}>{children}</main>
     </>
   );
 };
