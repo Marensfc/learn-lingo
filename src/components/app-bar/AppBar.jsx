@@ -1,8 +1,14 @@
 import css from './AppBar.module.css';
 import icons from '../../assets/icons.svg';
 import { Link } from 'react-router-dom';
+import { useModal } from '../../hooks/useModal';
+import LoginModal from '../login-modal/LoginModal';
+import RegisterModal from '../register-modal/RegisterModal';
 
 const AppBar = () => {
+  const loginModal = useModal();
+  const registerModal = useModal();
+
   return (
     <header className={css.header}>
       <div className={`container ${css.headerContainer}`}>
@@ -27,17 +33,33 @@ const AppBar = () => {
           </ul>
         </nav>
         <div className={css.headerAuthButtons}>
-          <button type="button" className={css.loginButton}>
+          <button
+            type="button"
+            className={css.loginButton}
+            onClick={() => loginModal.openModal()}
+          >
             <svg width="20" height="20" className={css.loginIcon}>
               <use href={`${icons}#log-in`}></use>
             </svg>{' '}
             Log in
           </button>
-          <button type="button" className={css.registrationButton}>
+          <button
+            type="button"
+            className={css.registrationButton}
+            onClick={() => registerModal.openModal()}
+          >
             Registration
           </button>
         </div>
       </div>
+      <LoginModal
+        isOpen={loginModal.isOpen}
+        closeModal={loginModal.closeModal}
+      />
+      <RegisterModal
+        isOpen={registerModal.isOpen}
+        closeModal={registerModal.closeModal}
+      />
     </header>
   );
 };
