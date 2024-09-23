@@ -4,6 +4,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import clsx from 'clsx';
+import { signIn } from '../../redux/auth/operations';
+import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -27,6 +31,7 @@ const loginSchema = yup.object().shape({
 const LoginForm = () => {
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -35,7 +40,16 @@ const LoginForm = () => {
     defaultValues: { email: '', password: '' },
   });
 
-  const onSubmit = data => console.log(data);
+  const dispatch = useDispatch();
+  const onSubmit = async data => {
+    try {
+      dispatch(signIn(data)).unwrap();
+      // toast.success('Successfully logged in!');
+      reset();
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <>
@@ -87,6 +101,19 @@ const LoginForm = () => {
           Log In
         </button>
       </form>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition:Slide
+      />
     </>
   );
 };

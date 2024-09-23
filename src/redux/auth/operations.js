@@ -1,21 +1,88 @@
-import axios from 'axios';
+import auth from '../../api/firebaseInitAndAuth';
 import {
-  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  signOut,
 } from 'firebase/auth';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  exchangeRefreshTokenForAnIdToken,
+  getUserData,
+} from '../../api/firebaseRESTfunctions';
 
-// const register = createAsyncThunk('auth/register', async (data, thunkApi) => {
-//   try {
-//   } catch (error) {
-//     thunkApi.rejectWithValue(error.message);
-//   }
-// });
+export const signUp = createAsyncThunk(
+  'auth/register',
+  async (data, thunkApi) => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
 
-const login = createAsyncThunk('auth/login', async (data, thunkApi) => {
+      updateProfile(userCredentials.user, {
+        displayName: data.name,
+      });
+
+      const userData = {
+        name: data.name,
+        email: data.email,
+        token: userCredentials._tokenResponse.refreshToken,
+      };
+
+      return userData;
+    } catch (error) {
+      thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const signIn = createAsyncThunk('auth/login', async (data, thunkApi) => {
   try {
-    // axios.get()
+    const userCredentials = await signInWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
+
+    const userData = {
+      name: userCredentials.user.displayName,
+      email: data.email,
+      token: userCredentials._tokenResponse.refreshToken,
+    };
+
+    return userData;
   } catch (error) {
     thunkApi.rejectWithValue(error.message);
   }
 });
+
+export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
+  try {
+    signOut(auth);
+  } catch (error) {
+    thunkApi.rejectWithValue(error.message);
+  }
+});
+
+export const refreshUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkApi) => {
+    try {
+      const persistedToken = thunkApi.getState().auth.token;
+      if (persistedToken === null) {
+        return thunkApi.rejectWithValue('Unable to fetch user');
+      }
+
+      const { id_token, refresh_token } =
+        await exchangeRefreshTokenForAnIdToken(persistedToken);
+
+      const { displayName, email } = await getUserData(id_token);
+
+      return { name: displayName, email, token: refresh_token };
+    } catch (error) {
+      thunkApi.rejectWithValue(error.message);
+    }
+  }
+);

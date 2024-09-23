@@ -2,13 +2,11 @@ import css from './TeachersList.module.css';
 
 import TeacherCard from '../teacher-card/TeacherCard';
 import LoadMoreBtn from '../load-more-btn/LoadMoreBtn';
-import Loader from '../loader/Loader/Loader';
+import Loader from '../loader/Loader';
 
-import { useRef, useState } from 'react';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useRef, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchTeachers } from '../../redux/teachers/operations';
-import { useSelector } from 'react-redux';
 import {
   selectTeachers,
   selectIsLoading,

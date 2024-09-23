@@ -4,6 +4,8 @@ import { getAuth } from 'firebase/auth';
 const firebaseConfig = {
   apiKey: 'AIzaSyAeXxA0XBIr73amkhCQYUcfu8Tm5c3zDs4',
   authDomain: 'learn-lingo-1f89d.firebaseapp.com',
+  databaseURL:
+    'https://learn-lingo-1f89d-default-rtdb.europe-west1.firebasedatabase.app',
   projectId: 'learn-lingo-1f89d',
   storageBucket: 'learn-lingo-1f89d.appspot.com',
   messagingSenderId: '224855337152',
@@ -13,3 +15,5 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+export default auth;
