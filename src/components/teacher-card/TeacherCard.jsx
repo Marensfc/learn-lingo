@@ -1,7 +1,12 @@
 import css from './TeacherCard.module.css';
 import icons from '../../assets/icons.svg';
 
+import { useState } from 'react';
+import { FaUserLarge } from 'react-icons/fa6';
+
 const TeacherCard = ({
+  openModalFunction,
+  setChosenTeacher,
   avatar_url,
   conditions,
   experience,
@@ -14,6 +19,18 @@ const TeacherCard = ({
   rating,
   reviews,
 }) => {
+  const additionalInfo = {
+    experience,
+    reviews,
+  };
+
+  const [detailedInfo, setDetailedInfo] = useState(null);
+
+  const handleOnClickBookLessonBtn = () => {
+    setChosenTeacher({ fullName, avatar_url });
+    openModalFunction();
+  };
+
   return (
     <li className={css.teacherCard}>
       <div className={css.teacherAvatarThumb}>
@@ -58,9 +75,40 @@ const TeacherCard = ({
         <p className={css.cardConditions}>
           Conditions: <span>{conditions.join(' ')}</span>
         </p>
-        <button type="button" className={css.cardBtnReadMore}>
-          Read more
-        </button>
+        {detailedInfo ? (
+          <div>
+            <p className={css.teacherExperience}>{detailedInfo.experience}</p>
+            <ul className={css.reviewsList}>
+              {detailedInfo.reviews.map((review, index) => (
+                <li key={index} className={css.reviewItem}>
+                  <div className={css.reviewerIconNameRatingWrapper}>
+                    <span className={css.reviewIconContainer}>
+                      <FaUserLarge className={css.reviewerIcon} />
+                    </span>
+                    <div className={css.reviewerNameRatingWrapper}>
+                      <p className={css.reviewerName}>{review.reviewer_name}</p>
+                      <p className={css.reviewerRating}>
+                        <svg width={16} height={16}>
+                          <use href={`${icons}#rating-star`}></use>
+                        </svg>{' '}
+                        {review.reviewer_rating}.0
+                      </p>
+                    </div>
+                  </div>
+                  <p className={css.reviewerComment}>{review.comment}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className={css.cardBtnReadMore}
+            onClick={() => setDetailedInfo(additionalInfo)}
+          >
+            Read more
+          </button>
+        )}
         <ul className={css.cardLevels}>
           {levels.map((level, index) => (
             <li key={index}>
@@ -68,6 +116,14 @@ const TeacherCard = ({
             </li>
           ))}
         </ul>
+        {detailedInfo !== null && (
+          <button
+            className={css.bookLessonBtn}
+            onClick={() => handleOnClickBookLessonBtn()}
+          >
+            Book trial lesson
+          </button>
+        )}
       </div>
     </li>
   );

@@ -34,11 +34,12 @@ const bookLessonSchema = yup.object().shape({
     }),
   phoneNumber: yup
     .string()
+    .trim()
     .phone('UA', 'Invalid phone number')
     .required('Phone number is a required field'),
 });
 
-const BookLessonForm = () => {
+const BookLessonForm = ({ teacherInfo }) => {
   const radioButton1 = useId();
   const radioButton2 = useId();
   const radioButton3 = useId();
@@ -57,8 +58,6 @@ const BookLessonForm = () => {
 
   const onSubmit = data => console.log(data);
 
-  console.log(errors);
-
   return (
     <>
       <p className={css.modalTitle}>Book trial lesson</p>
@@ -68,14 +67,11 @@ const BookLessonForm = () => {
       </p>
       <div className={css.teacherInfo}>
         <div className={css.teacherAvatarThumb}>
-          <img
-            src="https://ftp.goit.study/img/avatars/2.jpg"
-            alt="Teacher's avatar"
-          />
+          <img src={teacherInfo.avatar_url} alt="Teacher's avatar" />
         </div>
         <div className={css.teacherTextHintTextName}>
           <p className={css.teacherTextHint}>Your Teacher</p>
-          <p className={css.teacherName}>Jane Smith</p>
+          <p className={css.teacherName}>{teacherInfo.fullName}</p>
         </div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className={css.bookLessonForm}>

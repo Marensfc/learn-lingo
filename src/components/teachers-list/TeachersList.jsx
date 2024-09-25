@@ -3,6 +3,7 @@ import css from './TeachersList.module.css';
 import TeacherCard from '../teacher-card/TeacherCard';
 import LoadMoreBtn from '../load-more-btn/LoadMoreBtn';
 import Loader from '../loader/Loader';
+import BookLessonModal from '../book-lesson-modal/BookLessonModal';
 
 import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,9 +15,12 @@ import {
 import { calculatePaginationParams } from '../../utils/calculatePaginationParams';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useModal } from '../../hooks/useModal';
 
 const TeachersList = () => {
   const dispatch = useDispatch();
+  const bookLessonModal = useModal();
+  const [chosenTeacher, setChosenTeacher] = useState(null);
 
   const teachers = useSelector(selectTeachers) || [];
   const isLoading = useSelector(selectIsLoading);
@@ -25,7 +29,6 @@ const TeachersList = () => {
   const [page, setPage] = useState(1);
   const perPage = 4;
   const totalPages = useRef();
-  const teachersListRef = useRef();
 
   useEffect(() => {
     setShowBtn(false);
@@ -82,12 +85,14 @@ const TeachersList = () => {
   return (
     <>
       {teachers.length !== 0 && (
-        <ul className={css.teacherList} ref={teachersListRef}>
+        <ul className={css.teacherList}>
           {teachers.length !== 0 &&
             teachers.map((teacher, index) => {
               return (
                 <TeacherCard
                   key={index}
+                  openModalFunction={bookLessonModal.openModal}
+                  setChosenTeacher={setChosenTeacher}
                   avatar_url={teacher.avatar_url}
                   conditions={teacher.conditions}
                   experience={teacher.experience}
@@ -108,6 +113,11 @@ const TeachersList = () => {
       {showBtn && (
         <LoadMoreBtn increasePageFunction={() => setPage(page + 1)} />
       )}
+      <BookLessonModal
+        isOpen={bookLessonModal.isOpen}
+        closeModal={bookLessonModal.closeModal}
+        teacherInfo={chosenTeacher}
+      />
       <ToastContainer
         position="top-right"
         autoClose={3000}
