@@ -30,7 +30,7 @@ export const fetchTeachers = createAsyncThunk(
         };
       }
     } catch (error) {
-      thunkApi.rejectWithValue(error);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );

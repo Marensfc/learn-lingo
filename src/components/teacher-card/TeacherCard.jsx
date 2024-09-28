@@ -3,10 +3,20 @@ import icons from '../../assets/icons.svg';
 
 import { useState } from 'react';
 import { FaUserLarge } from 'react-icons/fa6';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import clsx from 'clsx';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TeacherCard = ({
+  _id,
   openModalFunction,
   setChosenTeacher,
+  addTeacherToFavoriteFunction,
+  deleteTeacherFromFavorite,
+  selected,
   avatar_url,
   conditions,
   experience,
@@ -14,7 +24,8 @@ const TeacherCard = ({
   lesson_info,
   lessons_done,
   levels,
-  fullName,
+  name,
+  surname,
   price_per_hour,
   rating,
   reviews,
@@ -24,11 +35,45 @@ const TeacherCard = ({
     reviews,
   };
 
+  const teacherAllInfo = {
+    _id,
+    avatar_url,
+    conditions,
+    experience,
+    languages,
+    lesson_info,
+    lessons_done,
+    levels,
+    name,
+    surname,
+    price_per_hour,
+    rating,
+    reviews,
+  };
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   const [detailedInfo, setDetailedInfo] = useState(null);
 
   const handleOnClickBookLessonBtn = () => {
-    setChosenTeacher({ fullName, avatar_url });
+    setChosenTeacher({
+      fullName: `${name} ${surname}`,
+      avatar_url,
+    });
     openModalFunction();
+  };
+
+  const handleOnClickAddTeacherToFavorite = () => {
+    if (!isLoggedIn) {
+      toast.info('You must have an account to add/remove from favorites');
+      return;
+    }
+
+    if (!selected) {
+      addTeacherToFavoriteFunction(teacherAllInfo);
+    } else {
+      deleteTeacherFromFavorite(_id);
+    }
   };
 
   return (
@@ -37,8 +82,16 @@ const TeacherCard = ({
         <img src={avatar_url} alt="Teacher's avatar" />
       </div>
       <div className={css.cardContentWrapper}>
-        <button className={css.cardAddToFavoritesBtn} type="button">
-          <svg width={26} height={26} className={`${css.favoritesIcon}`}>
+        <button
+          className={css.cardAddToFavoritesBtn}
+          type="button"
+          onClick={() => handleOnClickAddTeacherToFavorite()}
+        >
+          <svg
+            width={26}
+            height={26}
+            className={clsx(selected ? css.selected : css.favoritesIcon)}
+          >
             <use href={`${icons}#heart`}></use>
           </svg>
         </button>
@@ -65,7 +118,7 @@ const TeacherCard = ({
             </p>
           </div>
         </div>
-        <h3 className={css.cardTeacherName}>{fullName}</h3>
+        <h3 className={css.cardTeacherName}>{`${name} ${surname}`}</h3>
         <p className={css.cardSpokenLanguages}>
           Speaks: <span>{languages.join(', ')}</span>
         </p>
@@ -125,6 +178,19 @@ const TeacherCard = ({
           </button>
         )}
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition:Slide
+      />
     </li>
   );
 };

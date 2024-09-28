@@ -1,3 +1,3 @@
-export default function setBodyBgColor(color) {
+export function setBodyBgColor(color) {
   document.querySelector('body').style.setProperty('background-color', color);
 }

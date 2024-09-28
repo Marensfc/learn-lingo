@@ -1,8 +1,9 @@
 import css from './HomePage.module.css';
 // import icons from '../../assets/icons.svg';
 import heroImg from '../../assets/hero-img.jpg';
+
 import { Link } from 'react-router-dom';
-import setBodyBgColor from '../../utils/setBodyColor';
+import { setBodyBgColor } from '../../utils/setBodyColor';
 
 const HomePage = () => {
   setBodyBgColor('#ffffff');

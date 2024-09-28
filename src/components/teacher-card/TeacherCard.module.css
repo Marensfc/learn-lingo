@@ -52,7 +52,7 @@
   stroke: #121417;
 }
 
-.favoritesIcon.selected {
+.selected {
   fill: #9fb7ce;
   stroke: #9fb7ce;
 }

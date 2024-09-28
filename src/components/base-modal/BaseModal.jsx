@@ -9,7 +9,7 @@ const BaseModal = ({ isOpen, closeModal, styles, children }) => {
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
-      // bodyOpenClassName={css.stopScrolling}
+      bodyOpenClassName={css.stopScrolling}
       className={css.modal}
       overlayClassName={css.overlay}
       style={styles}

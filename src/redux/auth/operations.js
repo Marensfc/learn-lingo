@@ -1,4 +1,4 @@
-import auth from '../../api/firebaseInitAndAuth';
+import { auth } from '../../api/firebaseInit';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -9,7 +9,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   exchangeRefreshTokenForAnIdToken,
   getUserData,
-} from '../../api/firebaseRESTfunctions';
+} from '../../api/firebaseFunctions';
+import { createUserFieldInDatabase } from '../../api/firebaseFunctions';
 
 export const signUp = createAsyncThunk(
   'auth/register',
@@ -31,9 +32,11 @@ export const signUp = createAsyncThunk(
         token: userCredentials._tokenResponse.refreshToken,
       };
 
+      createUserFieldInDatabase(userCredentials.user.uid);
+
       return userData;
     } catch (error) {
-      thunkApi.rejectWithValue(error.message);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
@@ -54,7 +57,7 @@ export const signIn = createAsyncThunk('auth/login', async (data, thunkApi) => {
 
     return userData;
   } catch (error) {
-    thunkApi.rejectWithValue(error.message);
+    return thunkApi.rejectWithValue(error.message);
   }
 });
 
@@ -62,7 +65,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkApi) => {
   try {
     signOut(auth);
   } catch (error) {
-    thunkApi.rejectWithValue(error.message);
+    return thunkApi.rejectWithValue(error.message);
   }
 });
 
@@ -82,7 +85,7 @@ export const refreshUser = createAsyncThunk(
 
       return { name: displayName, email, token: refresh_token };
     } catch (error) {
-      thunkApi.rejectWithValue(error.message);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
