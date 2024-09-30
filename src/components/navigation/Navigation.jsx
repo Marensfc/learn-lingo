@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Navigation = ({ isLoggedIn }) => {
   return (
-    <nav>
+    <nav className={css.headerNav}>
       <ul className={css.headerNavList}>
         <li>
           <Link to="/" className={css.headerNavLink}>

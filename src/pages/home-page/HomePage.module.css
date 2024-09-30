@@ -12,7 +12,8 @@
 .heroTextContentWrapper {
   background-color: #f8f8f8;
   border-radius: 30px;
-  padding: 98px 108px 98px 64px;
+  /* padding: 98px 108px 98px 64px; */
+  padding: 98px 64px;
 }
 
 .heroTitle {
@@ -57,7 +58,7 @@
 }
 
 .heroImgThumb {
-  width: 568px;
+  max-width: 568px;
   border-radius: 30px;
   overflow: hidden;
 }
@@ -71,13 +72,16 @@
 /* ===============Statistic Bar=============== */
 
 .statisticBar {
-  padding-bottom: 32px;
+  /* padding-bottom: 32px; */
 }
 
 .statisticBarList {
   display: flex;
   align-items: center;
-  gap: 100px;
+  flex-wrap: wrap;
+  column-gap: 100px;
+  row-gap: 20px;
+  justify-content: center;
   border-radius: 30px;
   padding: 40px 122px;
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='30' ry='30' stroke='%239FB7CEFF' stroke-width='4' stroke-dasharray='14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
@@ -104,4 +108,41 @@
   line-height: 1.29;
   letter-spacing: -0.02em;
   color: rgba(18, 20, 23, 0.7);
+}
+
+@media screen and (max-width: 560px) {
+  .heroTextContentWrapper {
+    padding: 98px 32px;
+  }
+  .heroTitle {
+    font-size: 40px;
+  }
+  .heroText {
+    font-size: 14px;
+  }
+  .heroImgThumb {
+    height: 400px;
+  }
+  .statisticBarItemNumber {
+    font-size: 22px;
+  }
+  .statisticBarItemTitle {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .heroContainer {
+    flex-direction: column;
+    align-items: center;
+    /* background-color: gray; */
+  }
+
+  .heroLink {
+    display: block;
+    max-width: 266px;
+    padding: 16px 0;
+    text-align: center;
+    margin: 0 auto;
+  }
 }

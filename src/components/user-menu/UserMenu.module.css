@@ -32,8 +32,16 @@
   transition: background-color 150ms ease, color 150ms ease, outline 150ms ease;
 }
 
-.logoutBtn:hover {
+.logoutBtn:hover,
+.logoutBtn:focus,
+.logoutBtn:active {
   background-color: transparent;
   color: #121417;
   outline: 1px solid #121417;
+}
+
+@media screen and (max-width: 768px) {
+  .userMenuWrapper {
+    display: none;
+  }
 }

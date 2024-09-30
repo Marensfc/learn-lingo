@@ -28,3 +28,9 @@
   color: #121417;
   outline: 1px solid #121417;
 }
+
+@media screen and (max-width: 960px) {
+  .headerAuthButtons {
+    display: none;
+  }
+}
