@@ -8,7 +8,7 @@ const LoginModal = ({ isOpen, closeModal }) => {
       closeModal={closeModal}
       styles={{ content: { maxWidth: '566px' } }}
     >
-      <LoginForm />
+      <LoginForm closeModal={closeModal} />
     </BaseModal>
   );
 };

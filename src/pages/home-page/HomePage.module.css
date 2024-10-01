@@ -115,7 +115,7 @@
     padding: 98px 32px;
   }
   .heroTitle {
-    font-size: 40px;
+    font-size: 36px;
   }
   .heroText {
     font-size: 14px;
@@ -143,6 +143,5 @@
     max-width: 266px;
     padding: 16px 0;
     text-align: center;
-    margin: 0 auto;
   }
 }

@@ -1,5 +1,4 @@
 import css from './HomePage.module.css';
-// import icons from '../../assets/icons.svg';
 import heroImg from '../../assets/hero-img.jpg';
 
 import { Link } from 'react-router-dom';

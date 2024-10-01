@@ -129,7 +129,7 @@ const TeacherCard = ({
           Conditions: <span>{conditions.join(' ')}</span>
         </p>
         {detailedInfo ? (
-          <div>
+          <div className={css.detailedInfoWrapper}>
             <p className={css.teacherExperience}>{detailedInfo.experience}</p>
             <ul className={css.reviewsList}>
               {detailedInfo.reviews.map((review, index) => (

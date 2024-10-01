@@ -8,7 +8,7 @@ const RegisterModal = ({ isOpen, closeModal }) => {
       closeModal={closeModal}
       styles={{ content: { maxWidth: '566px' } }}
     >
-      <RegisterForm />
+      <RegisterForm closeModal={closeModal} />
     </BaseModal>
   );
 };

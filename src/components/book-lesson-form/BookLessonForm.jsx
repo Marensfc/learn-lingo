@@ -39,7 +39,7 @@ const bookLessonSchema = yup.object().shape({
     .required('Phone number is a required field'),
 });
 
-const BookLessonForm = ({ teacherInfo }) => {
+const BookLessonForm = ({ teacherInfo, closeModal }) => {
   const radioButton1 = useId();
   const radioButton2 = useId();
   const radioButton3 = useId();
@@ -50,13 +50,17 @@ const BookLessonForm = ({ teacherInfo }) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(bookLessonSchema),
     mode: 'onChange',
     defaultValues: { reason: '', fullName: '', email: '', phoneNumber: '' },
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    reset();
+    closeModal();
+  };
 
   return (
     <>

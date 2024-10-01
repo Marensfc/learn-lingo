@@ -10,7 +10,7 @@ const BookLessonModal = ({ isOpen, closeModal, teacherInfo }) => {
         content: { maxWidth: '600px', maxHeight: '90vh', overflow: 'auto' },
       }}
     >
-      <BookLessonForm teacherInfo={teacherInfo} />
+      <BookLessonForm teacherInfo={teacherInfo} closeModal={closeModal} />
     </BaseModal>
   );
 };

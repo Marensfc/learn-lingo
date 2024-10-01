@@ -6,8 +6,6 @@ import * as yup from 'yup';
 import clsx from 'clsx';
 import { signIn } from '../../redux/auth/operations';
 import { useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -28,7 +26,7 @@ const loginSchema = yup.object().shape({
     .max(28, 'Password should have at most 28 characters'),
 });
 
-const LoginForm = () => {
+const LoginForm = ({ closeModal }) => {
   const {
     register,
     reset,
@@ -44,10 +42,10 @@ const LoginForm = () => {
   const onSubmit = async data => {
     try {
       dispatch(signIn(data)).unwrap();
-      // toast.success('Successfully logged in!');
+      closeModal();
       reset();
     } catch (error) {
-      toast.error(error.message);
+      console.log(error.message);
     }
   };
 
@@ -101,19 +99,6 @@ const LoginForm = () => {
           Log In
         </button>
       </form>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition:Slide
-      />
     </>
   );
 };

@@ -3,6 +3,8 @@ import css from './FavoritesPage.module.css';
 import FiltersForm from '../../components/filters-form/FiltersForm';
 import TeachersList from '../../components/teachers-list/TeachersList';
 import BookLessonModal from '../../components/book-lesson-modal/BookLessonModal';
+import ScreenSaver from '../../components/screen-saver/ScreenSaver';
+import Loader from '../../components/loader/Loader';
 
 import { useEffect, useState } from 'react';
 import { useModal } from '../../hooks/useModal';
@@ -24,8 +26,10 @@ const FavoritesPage = () => {
 
   const [chosenTeacher, setChosenTeacher] = useState(null);
   const [favoriteTeachers, setFavoriteTeachers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const loadFavoriteTeachers = async () => {
       try {
         const response = await getUserFavoriteTeachers(auth.currentUser.uid);
@@ -33,6 +37,8 @@ const FavoritesPage = () => {
       } catch (error) {
         toast.error(error.message);
         return;
+      } finally {
+        setIsLoading(false);
       }
     };
     loadFavoriteTeachers();
@@ -73,6 +79,8 @@ const FavoritesPage = () => {
             addTeacher={addTeacherToFavorite}
             deleteTeacher={deleteTeacherFromFavorite}
           />
+          {isLoading && <Loader />}
+          {!isLoading && favoriteTeachers.length === 0 && <ScreenSaver />}
         </div>
       </section>
       <BookLessonModal
