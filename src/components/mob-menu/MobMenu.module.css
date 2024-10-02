@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
+  display: none;
 }
 
 .mobMenuIcon {
@@ -26,7 +27,7 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  min-width: 50vh;
+  min-width: 50%;
   min-height: 100vh;
   background: linear-gradient(
     180deg,
@@ -141,8 +142,14 @@
   outline: 1px solid #121417;
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (max-width: 560px) {
+  .mobMenuContentWrapper {
+    min-width: 100%;
+  }
+}
+
+@media screen and (max-width: 960px) {
   .mobMenuBtn {
-    display: none;
+    display: block;
   }
 }

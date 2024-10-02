@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import clsx from 'clsx';
 import { signIn } from '../../redux/auth/operations';
 import { useDispatch } from 'react-redux';
+import { useRef } from 'react';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -38,6 +39,10 @@ const LoginForm = ({ closeModal }) => {
     defaultValues: { email: '', password: '' },
   });
 
+  const { ref, ...rest } = register('password');
+  const inputPasswordRef = useRef();
+  const svgEyeTogglePasswordVisibility = useRef();
+
   const dispatch = useDispatch();
   const onSubmit = async data => {
     try {
@@ -46,6 +51,18 @@ const LoginForm = ({ closeModal }) => {
       reset();
     } catch (error) {
       console.log(error.message);
+    }
+  };
+
+  const handleOnClickTogglePasswordVisibility = () => {
+    const inputType = inputPasswordRef.current.type;
+
+    if (inputType === 'password') {
+      inputPasswordRef.current.type = 'text';
+      svgEyeTogglePasswordVisibility.current.firstElementChild.href.baseVal = `${icons}#icon-eye-on`;
+    } else if (inputType === 'text') {
+      inputPasswordRef.current.type = 'password';
+      svgEyeTogglePasswordVisibility.current.firstElementChild.href.baseVal = `${icons}#icon-eye-off`;
     }
   };
 
@@ -76,16 +93,29 @@ const LoginForm = ({ closeModal }) => {
           })}
         >
           <input
+            {...rest}
+            ref={e => {
+              ref(e);
+              inputPasswordRef.current = e;
+            }}
             type="password"
-            {...register('password')}
             className={clsx({
               [css.passwordInput]: true,
               [css.passwordInputHasError]: errors.password,
             })}
             placeholder="Password"
           />
-          <button type="button" className={css.togglePwdVisibilityBtn}>
-            <svg width={20} height={20} className={css.eyeIcon}>
+          <button
+            type="button"
+            className={css.togglePwdVisibilityBtn}
+            onClick={handleOnClickTogglePasswordVisibility}
+          >
+            <svg
+              width={20}
+              height={20}
+              className={css.eyeIcon}
+              ref={svgEyeTogglePasswordVisibility}
+            >
               <use href={`${icons}#icon-eye-off`}></use>
             </svg>
           </button>

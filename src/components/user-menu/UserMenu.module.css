@@ -40,7 +40,7 @@
   outline: 1px solid #121417;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 960px) {
   .userMenuWrapper {
     display: none;
   }

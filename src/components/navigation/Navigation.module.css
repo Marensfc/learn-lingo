@@ -9,7 +9,7 @@
   padding: 14px 0;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 960px) {
   .headerNav {
     display: none;
   }
