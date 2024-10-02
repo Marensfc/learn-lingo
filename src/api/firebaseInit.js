@@ -2,8 +2,6 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 
-dotenv.config();
-
 const firebaseConfig = {
   apiKey: 'AIzaSyAeXxA0XBIr73amkhCQYUcfu8Tm5c3zDs4',
   authDomain: 'learn-lingo-1f89d.firebaseapp.com',
